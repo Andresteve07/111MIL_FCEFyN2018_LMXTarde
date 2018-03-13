@@ -5,12 +5,19 @@ import java.util.Random;
 public class Main extends MetodosSteve {
     
     public static void main(String[] args) {
-        char operacion;
+        char operacion='a';
         int fichas;
         do{
+
             imprimirPanio();
-            imprimir("Ingrese el codigo de la operacion, j para jugar o s para jugar un sola vez");
-            operacion = tomarChar();
+            
+
+            
+            while(operacion !='j'&& operacion!='s'){
+                imprimir("Ingrese el codigo de la operacion, j para jugar o s para jugar un sola vez");
+                operacion = tomarChar();
+            }
+
             fichas=menuPrincipal();
            }
         while(menuApuesta(operacion,fichas)==true);
