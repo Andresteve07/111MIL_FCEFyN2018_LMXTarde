@@ -5,16 +5,36 @@ import java.util.Random;
 public class Main extends MetodosSteve {
     
     public static void main(String[] args) {
-        char operacion;
+        int[] apuestas=new int[37];
+        int bola;
+        int ganancia;
+        char operacion='a';
         int fichas;
+        int fichasJuego;
+        imprimir("ingrese dinero para jugar:");
+        fichas=tomarInt();
         do{
+            
             imprimirPanio();
-            imprimir("Ingrese el codigo de la operacion, j para jugar o s para jugar un sola vez");
+            do{
+                imprimir("ingrese cantidad de fichas a apostar, tienes disponibles "+fichas+" para apostar:");
+                fichasJuego=tomarInt();
+                
+            }while(fichasJuego<=0 || fichasJuego>fichas);
+            fichas=fichas-fichasJuego;
+            apuestas=menuPrincipal( fichasJuego);
+            imprimir("si desea realizar otra apuesta ingrese: j, si no ingrese c para continuar con el juego, recuerde que solo puede apostar si aun le queda credito en fichas!");
             operacion = tomarChar();
-            fichas=menuPrincipal();
-           }
-        while(menuApuesta(operacion,fichas)==true);
-        girarRuleta();
+            }while(menuApuesta(operacion,fichas)==true);
+        bola=girarRuleta();
+        imprimir("salio el numero: "+bola);ganancia=calculoGanancia(apuestas, bola);
+        fichas=fichas+ganancia;
+        if(apuestas[bola]!=0){
+            imprimir("ganaste "+ganancia+" fichas ahora tienes "+fichas+" fichas de credito");
+        }else{
+            imprimir("perdiste mejor suerte la proxima!");
+        }
+       
     }
 
     /**
@@ -23,12 +43,10 @@ public class Main extends MetodosSteve {
      * cambiar por fichas(credito)
      * @return credito en cantidad de fichas.
      */
-    public static int menuPrincipal(){
-        int fichas;
+    public static int [] menuPrincipal( int fichasJuego){
+        int[] apuesta=new int[37];
         char jugada;
-        int fichasJuego, numeroJuego, numerojuego2;
-        imprimir("ingresar dinero a apostar si desea sumar a su cantidad de dinero actual, ponga 0 si no desea poner mas dinero:");
-        fichas=tomarInt();
+        int numeroJuego, numerojuego2;
         imprimir("ingrese la apuesta q desea hacer:");
         imprimir("p- para apuesta pleno:");
         imprimir("d- para apuesta doble:");
@@ -54,24 +72,15 @@ public class Main extends MetodosSteve {
             imprimir("P- para apuesta par impar");
             jugada=tomarChar();
         }
+//apuesta pleno:
         if(jugada=='p'){
             do{
-                imprimir("ingrese cantidad de fichas a apostar, tienes disponibles "+fichas+" para apostar:");
-                fichasJuego=tomarInt();
-            }while(fichasJuego<=0 || fichasJuego>fichas);
-        
-            fichas=fichas-fichasJuego;
-            do{
-                imprimir("ingrese numero a jugar:");
+                imprimir("ingrese numero a jugar del 0 al 36:");
                 numeroJuego=tomarInt();
             }while(numeroJuego<=0 || numeroJuego>36 );
-            apuestaPleno(numeroJuego, fichasJuego);
+            apuesta=apuestaPleno(numeroJuego, fichasJuego);
+//apuesta doble:
         }else if(jugada=='d'){
-            do{
-                imprimir("ingrese cantidad de fichas a apostar, tienes disponibles "+fichas+" para apostar:");
-                fichasJuego=tomarInt();
-            }while(fichasJuego<=0 || fichasJuego>fichas);
-            fichas=fichas-fichasJuego;
             do{
             imprimir("ingrese numero a jugar:");
             numeroJuego=tomarInt();
@@ -80,91 +89,62 @@ public class Main extends MetodosSteve {
                 imprimir("ingrese el 2 numero a jugar:");
                 numerojuego2=tomarInt(); 
             }while(numerojuego2<=0 || numerojuego2>36 && numerojuego2==numeroJuego);
-            apuestaDoble(numeroJuego, numerojuego2, fichasJuego);
-        
+            apuesta=apuestaDoble(numeroJuego, numerojuego2, fichasJuego);
+//apuesta calle:
         }else if(jugada=='c'){
             do{
-            imprimir("ingrese cantidad de fichas a apostar, tienes disponibles "+fichas+" para apostar:");
-            fichasJuego=tomarInt();
-            }while(fichasJuego<=0 || fichasJuego>fichas);
-            fichas=fichas-fichasJuego;
-            do{
-                imprimir("ingrese numero de calle a jugar:");
+                imprimir("ingrese numero de calle a jugar del 1 al 12:");
                 numeroJuego=tomarInt();
             }while(numeroJuego<1 || numeroJuego>12);
-            apuestaCalle(numeroJuego, fichasJuego);
+            apuesta=apuestaCalle(numeroJuego, fichasJuego);
+//apuesta esquina:
         }else if(jugada=='e'){
-             do{
-                imprimir("ingrese cantidad de fichas a apostar, tienes disponibles "+fichas+" para apostar:");
-                fichasJuego=tomarInt();
-            }while(fichasJuego<=0 || fichasJuego>fichas);
-            fichas=fichas-fichasJuego;
             do{
-                imprimir("ingrese numero de esquina a jugar:");
+                imprimir("ingrese numero de esquina a jugar del 1 la 14:");
                 numeroJuego=tomarInt();
             }while(numeroJuego<1 || numeroJuego>14);
-            apuestaEsquina(numeroJuego, fichasJuego);
+            apuesta=apuestaEsquina(numeroJuego, fichasJuego);
+//apuesta linea: 
         }else if(jugada=='l'){
             do{
-                imprimir("ingrese cantidad de fichas a apostar, tienes disponibles "+fichas+" cantiadad de fichas para apostar:");
-                fichasJuego=tomarInt();
-            }while(fichasJuego<=0 || fichasJuego>fichas);
-            fichas=fichas-fichasJuego;
-            do{
-                imprimir("ingrese numero de linea a jugar:");
+                imprimir("ingrese numero de linea a jugar del 1 al 11:");
                 numeroJuego=tomarInt();
             }while(numeroJuego<1 || numeroJuego>11);
-            apuestaLinea(numeroJuego, fichasJuego);
+            apuesta=apuestaLinea(numeroJuego, fichasJuego);
+//apuesta docena:
         }else if(jugada=='D'){
             do{
-                imprimir("ingrese cantidad de fichas a apostar, tienes disponibles "+fichas+" cantiadad de fichas para apostar:");
-                fichasJuego=tomarInt();
-            }while(fichasJuego<=0 || fichasJuego>fichas);
-            fichas=fichas-fichasJuego;
-            do{
-                imprimir("ingrese numero de docena a jugar:");
+                imprimir("ingrese numero de docena a jugar del 1 al 3:");
                 numeroJuego=tomarInt();
             }while(numeroJuego<1 || numeroJuego>3);
-            apuestaDocena(numeroJuego, fichasJuego);
+            apuesta=apuestaDocena(numeroJuego, fichasJuego);
+//apuesta mitad:
         }else if(jugada=='M'){
             do{
-                imprimir("ingrese cantidad de fichas a apostar, tienes disponibles "+fichas+" cantiadad de fichas para apostar:");
-                fichasJuego=tomarInt();
-            }while(fichasJuego<=0 || fichasJuego>fichas);
-            fichas=fichas-fichasJuego;
-            do{
-                imprimir("ingrese numero de mitad a jugar:");
+                imprimir("ingrese numero de mitad a jugar 1 o 2:");
                 numeroJuego=tomarInt();
             }while(numeroJuego<1 || numeroJuego>2);
-            apuestaMitad(numeroJuego, fichasJuego);
+            apuesta=apuestaMitad(numeroJuego, fichasJuego);
+//apuesta columna:
         }else if(jugada=='C'){
             do{
-                imprimir("ingrese cantidad de fichas a apostar, tienes disponibles "+fichas+" cantiadad de fichas para apostar:");
-                fichasJuego=tomarInt();
-            }while(fichasJuego<=0 || fichasJuego>fichas);
-            fichas=fichas-fichasJuego;
-            do{
-                imprimir("ingrese numero de columna a jugar:");
+                imprimir("ingrese numero de columna a jugar 1, 2 o 3:");
                 numeroJuego=tomarInt();
             }while(numeroJuego<1 || numeroJuego>3);
-            apuestaColumna(numeroJuego, fichasJuego);
+            apuesta=apuestaColumna(numeroJuego, fichasJuego);
+//apuesta par/impar:
         }else if(jugada=='P'){
-            do{
-                imprimir("ingrese cantidad de fichas a apostar, tienes disponibles "+fichas+" cantiadad de fichas para apostar:");
-                fichasJuego=tomarInt();
-            }while(fichasJuego<=0 || fichasJuego>fichas);
-            fichas=fichas-fichasJuego;
             do{
                 imprimir("ingrese numero de juego 1 para impar o 2 para par:");
                 numeroJuego=tomarInt();
             }while(numeroJuego<1 || numeroJuego>2);
             if(numeroJuego==1){
-                apuestaParImpar(true, fichasJuego);
+                apuesta=apuestaParImpar(true, fichasJuego);
             }else{
-                apuestaParImpar(false, fichasJuego);
+                apuesta=apuestaParImpar(false, fichasJuego);
             }
         }
-        return fichas;
+        return apuesta;
     }
     
     /**
@@ -182,8 +162,8 @@ public class Main extends MetodosSteve {
      * @return 
      */
     public static boolean menuApuesta(char cadena,int fichas ){ 
-        while(cadena!='j'&&cadena!='s'){
-            imprimir("opcion erronea ingrese j para jugar y hacer varias apuestas o s para realizar una sola apuesta:");
+        while(cadena!='j'&&cadena!='c'){
+            imprimir("opcion erronea ingrese j para realizar mas apuestas o c para continuar con el juego por favor, recuerde que solo puede apostar si aun le queda credito en fichas!:");
             cadena=tomarChar();
         }
         if(cadena=='j'&& fichas>0){
