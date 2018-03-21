@@ -74,7 +74,7 @@ public void testEncolar(){
 public void testDesencolar(){
     boolean ok=true;
     char[] desencolaTest={'a','b','c','d'};
-    char[] desencolaOK={'b','c','d'};
+    char[] desencolaOK={'a','b','c'};
     char[] desencolaDevuelto=Colecciones.desencolar(desencolaTest);
     
     for (int i = 0; i < desencolaOK.length; i++) {

@@ -50,10 +50,10 @@ public class Colecciones {
     public static char[] desencolar(char[] palabraOriginal){
         char[] desencolaOK={'b','c','d'};
         char[] desencolado=new char[(palabraOriginal.length)-1];
-int i=0;
+        int i=0;
 
          for(i=0;i<palabraOriginal.length-1;i++){
-        desencolado[i]=palabraOriginal[i+1];
+        desencolado[i]=palabraOriginal[i];
     }
         return desencolado;
     }
