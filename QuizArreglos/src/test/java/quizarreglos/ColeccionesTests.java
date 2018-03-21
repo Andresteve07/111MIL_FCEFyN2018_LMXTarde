@@ -27,14 +27,14 @@ public class ColeccionesTests extends TestCase{
             public void write(int b) throws IOException { }
         }));
     }
-public void apilarTest(){
+public void testApilar(){
     boolean ok=true;
     char[] apilaTest={'a','b','c','d'};
     char nuevo='e';
     char[] apilarOK={'a','b','c','d','e'};
     char[] apilarDevuelto=Colecciones.apilar(apilaTest,nuevo);
     
-    for (int i = 0; i < apilaTest.length; i++) {
+    for (int i = 0; i < apilarOK.length; i++) {
         if(apilarDevuelto[i]!=apilarOK[i]){
             ok=false;
         }
@@ -42,13 +42,13 @@ public void apilarTest(){
     assertEquals(ok, true);
 }
 
-public void desapilarTest(){
+public void testDesapilar(){
     boolean ok=true;
     char[] desapilaTest={'a','b','c','d'};
     char[] desapilarOK={'a','b','c'};
     char[] desapilarDevuelto=Colecciones.desapilar(desapilaTest);
     
-    for (int i = 0; i < desapilaTest.length; i++) {
+    for (int i = 0; i < desapilarOK.length; i++) {
         if(desapilarDevuelto[i]!=desapilarOK[i]){
             ok=false;
         }
@@ -56,14 +56,14 @@ public void desapilarTest(){
     assertEquals(ok, true);
 }
 
-public void encolarTest(){
+public void testEncolar(){
     boolean ok=true;
     char[] encolaTest={'a','b','c','d'};
     char nuevo='e';
     char[] encolaOK={'e','a','b','c','d'};
     char[] encolaDevuelto=Colecciones.encolar(encolaTest,nuevo);
     
-    for (int i = 0; i < encolaTest.length; i++) {
+    for (int i = 0; i < encolaOK.length; i++) {
         if(encolaDevuelto[i]!=encolaOK[i]){
             ok=false;
         }
@@ -71,13 +71,13 @@ public void encolarTest(){
     assertEquals(ok, true);
 }
 
-public void desencolarTest(){
+public void testDesencolar(){
     boolean ok=true;
     char[] desencolaTest={'a','b','c','d'};
     char[] desencolaOK={'b','c','d'};
     char[] desencolaDevuelto=Colecciones.desencolar(desencolaTest);
     
-    for (int i = 0; i < desencolaTest.length; i++) {
+    for (int i = 0; i < desencolaOK.length; i++) {
         if(desencolaDevuelto[i]!=desencolaOK[i]){
             ok=false;
         }
