@@ -28,4 +28,37 @@ public class AhorcadoTests extends TestCase{
         }));
     }
     
+    public void testJugada(){
+        char[] palabraOriginal = {'H','O','L','O'};
+        char[] resultadoEsperado = {'_','O','_','O'};
+        char[] resultadoReal = Ahorcado.resultadoJugada(palabraOriginal, 'O');
+        boolean sonIguales = true;
+        for (int i = 0; i < resultadoReal.length; i++) {
+            if(resultadoEsperado[i] != resultadoReal[i]){
+                sonIguales = false;
+                break;
+            }
+            assertTrue(sonIguales);
+        }
+    }
+    
+    public void testValidarJugadaCuandoLePega(){
+        char[] jugadaAnterior = {'_','_','_','_'};
+        char[] jugadaNueva = {'_','O','_','O'};
+        assertTrue(Ahorcado.validarJugada(jugadaAnterior, jugadaNueva));
+    }
+    
+    public void testValidarJugadaCuandoNoLePega(){
+        char[] jugadaAnterior = {'_','0','_','0'};
+        char[] jugadaNueva = {'_','O','_','O'};
+        assertTrue(!Ahorcado.validarJugada(jugadaAnterior, jugadaNueva));
+    }
+    
+    /*
+    public void testValidarJugadaCuandoFallaDistLength(){
+        char[] jugadaAnterior = {'_','_','_','_'};
+        char[] jugadaNueva = {'_','O','_','O','_'};
+        assertTrue(!Ahorcado.validarJugada(jugadaAnterior, jugadaNueva));
+    }
+    */
 }
